@@ -33,11 +33,47 @@ import Notifications from './pages/Notifications';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 
+import { isConfigured } from './lib/supabase';
+import { Shield, ExternalLink } from 'lucide-react';
+
 function AppContent() {
   const { user, agent, loading, signOut, setupError } = useAuth();
   const [currentPage, setCurrentPage] = useState('landing');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  if (!isConfigured) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="text-center max-w-lg w-full bg-white p-12 rounded-3xl shadow-xl border border-gray-100">
+          <div className="mb-8 flex justify-center">
+            <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center">
+              <Shield className="w-10 h-10 text-amber-500" />
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight text-center">Connection Required</h1>
+          <p className="text-gray-600 mb-8 leading-relaxed text-center">
+            Your application is launched but not yet connected to its database safely. You need to add your Supabase credentials to your hosting platform's environment variables.
+          </p>
+          
+          <div className="space-y-3 mb-8 text-left bg-gray-50 p-6 rounded-2xl border border-gray-100 font-mono text-sm leading-6">
+            <p className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"/> VITE_SUPABASE_URL</p>
+            <p className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"/> VITE_SUPABASE_ANON_KEY</p>
+          </div>
+
+          <a 
+            href="https://github.com/Stuccord/bearguard-project/settings/secrets/actions" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center px-8 py-4 bg-amber-500 text-white rounded-2xl font-semibold hover:bg-amber-600 transition-all shadow-lg shadow-amber-200 active:scale-95"
+          >
+            Add Secrets to GitHub
+            <ExternalLink className="ml-2 w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (agent) {
