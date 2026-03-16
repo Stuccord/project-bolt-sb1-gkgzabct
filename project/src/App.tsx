@@ -57,8 +57,14 @@ function AppContent() {
           </p>
           
           <div className="space-y-3 mb-8 text-left bg-gray-50 p-6 rounded-2xl border border-gray-100 font-mono text-sm leading-6">
-            <p className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"/> VITE_SUPABASE_URL</p>
-            <p className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"/> VITE_SUPABASE_ANON_KEY</p>
+            <p className="flex items-center gap-2">
+              <div className={`w-1.5 h-1.5 rounded-full ${import.meta.env.VITE_SUPABASE_URL ? 'bg-green-500' : 'bg-red-500'}`}/> 
+              VITE_SUPABASE_URL: {import.meta.env.VITE_SUPABASE_URL ? '✅ Connected' : '❌ Missing'}
+            </p>
+            <p className="flex items-center gap-2">
+              <div className={`w-1.5 h-1.5 rounded-full ${import.meta.env.VITE_SUPABASE_ANON_KEY ? 'bg-green-500' : 'bg-red-500'}`}/> 
+              VITE_SUPABASE_ANON_KEY: {import.meta.env.VITE_SUPABASE_ANON_KEY ? '✅ Connected' : '❌ Missing'}
+            </p>
           </div>
 
           <a 
